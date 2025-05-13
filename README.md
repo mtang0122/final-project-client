@@ -2,8 +2,6 @@
 
 Group: Marcus Tang - mtang0122
 
-<br/>
-
 ## Common Errors You May Encounter
 ### Error: ERR_OSSL_EVP_UNSUPPORTED
 This error indicates that your application uses an algorithm or key size not supported by OpenSSL 3.0.
