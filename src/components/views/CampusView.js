@@ -72,8 +72,8 @@ const CampusView = ({ campus, deleteStudent, editCampus, fetchCampus }) => {
           color="primary"
           onClick={() => setIsEditing(true)}
         >
-        Edit Campus
-     </Button>
+          Edit Campus
+      </Button>
       <p>{campus.address}</p>
       <p>{campus.description}</p>
 	  

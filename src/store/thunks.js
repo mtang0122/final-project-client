@@ -137,14 +137,23 @@ export const deleteStudentThunk = studentId => async dispatch => {  // The THUNK
 
 // Edit Student
 // THUNK CREATOR:
-export const editStudentThunk = student => async dispatch => {  // The THUNK
+export const editStudentThunk = (studentId, updatedData) => async (dispatch) => {
   try {
-    // API "put" call to update student (based on "id" and "student" object's data) from database
-    let updatedStudent = await axios.put(`/api/students/${student.id}`, student); 
-    // Update successful so change state with dispatch
-    dispatch(ac.editStudent(updatedStudent));
-  } catch(err) {
+    // First dispatch optimistic update
+    dispatch({
+      type: 'OPTIMISTIC_UPDATE_STUDENT',
+      payload: { id: studentId, updates: updatedData }
+    });
+    
+    // Then make API call
+    const response = await axios.put(`/api/students/${studentId}`, updatedData);
+    
+    // Dispatch final update with server response
+    dispatch(ac.editStudent(response.data));
+    return response.data; // Important for handling in component
+  } catch (err) {
     console.error(err);
+    throw err; // Important for error handling in component
   }
 };
 

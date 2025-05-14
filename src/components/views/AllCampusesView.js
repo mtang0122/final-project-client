@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 
 const AllCampusesView = (props) => {
   const {campuses, deleteCampus} = props;
+  
+  const defaultImage = 'https://picsum.photos/200';
   // If there is no campus, display a message.
   if (!props.allCampuses.length) {
     return (
@@ -28,6 +30,15 @@ const AllCampusesView = (props) => {
 
       {props.allCampuses.map((campus) => (
         <div key={campus.id}>
+		  <img 
+          src={ defaultImage } 
+          style={{
+            maxWidth: '100%',
+            maxHeight: '300px',
+            borderRadius: '8px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          }}
+        />
           <Link to={`/campus/${campus.id}`}>
             <h2>{campus.name}</h2>
           </Link>
