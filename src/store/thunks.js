@@ -20,6 +20,34 @@ export const fetchAllCampusesThunk = () => async (dispatch) => {  // The THUNK
   }
 };
 
+// Add Campus
+// THUNK CREATOR:
+export const addCampusThunk = (campus) => async (dispatch) => {  // The THUNK
+  try {
+    // API "post" call to add "campus" object's data to database
+    let res = await axios.post(`/api/campuses`, campus);  
+    // Call Action Creator to return Action object (type + payload with new campuses data)
+    // Then dispatch the Action object to Reducer to update state 
+    dispatch(ac.addCampus(res.data));
+    return res.data;
+  } catch(err) {
+    console.error(err);
+  }
+};
+
+// Delete Campus
+// THUNK CREATOR:
+export const deleteCampusThunk = campusId => async dispatch => {  // The THUNK
+  try {
+    // API "delete" call to delete campus (based on "campusID") from database
+    await axios.delete(`/api/campuses/${campusId}`);  
+    // Delete successful so change state with dispatch
+    dispatch(ac.deleteCampus(campusId));
+  } catch(err) {
+    console.error(err);
+  }
+};
+
 // Single Campus
 // THUNK CREATOR:
 export const fetchCampusThunk = (id) => async (dispatch) => {  // The THUNK
@@ -29,6 +57,39 @@ export const fetchCampusThunk = (id) => async (dispatch) => {  // The THUNK
     dispatch(ac.fetchCampus(res.data));
   } catch(err) {
     console.error(err);
+  }
+};
+
+// Remove student from campus
+// THUNK CREATOR:
+export const removeStudentFromCampusThunk = (studentId) => async (dispatch) => {
+  try {
+    // Update student in backend (set campusId to null)
+    const updatedStudent = await axios.put(`/api/students/${studentId}`, { campusId: null });
+    
+    // Dispatch action to update the student in Redux store
+    dispatch({
+      type: 'REMOVE_STUDENT_FROM_CAMPUS',
+      payload: { studentId, campusId: null }
+    });
+    
+    return updatedStudent.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+// Edit campus
+// THUNK CREATOR:
+export const editCampusThunk = (campusId, updatedData) => async (dispatch) => {
+  try {
+    const response = await axios.put(`/api/campuses/${campusId}`, updatedData);
+    dispatch(ac.editCampus(response.data));  // Use action creator instead of raw type
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 };
 
