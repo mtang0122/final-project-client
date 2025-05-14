@@ -22,7 +22,7 @@ class NewStudentContainer extends Component {
       lastname: "", 
 	  email: "",
 	  imageURL: "",
-	  gpa: "",
+	  gpa: null,
       campusId: null, 
       redirect: false, 
       redirectId: null
@@ -58,7 +58,7 @@ class NewStudentContainer extends Component {
       lastname: "", 
 	  email: "",
 	  imageURL: "",
-	  gpa: "",
+	  gpa: null,
       campusId: null, 
       redirect: true, 
       redirectId: newStudent.id
